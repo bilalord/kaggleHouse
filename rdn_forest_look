@@ -1,5 +1,6 @@
 # Variation of rdn_forest_drop but with exploratory purposes. Will score the dataset after removing features according to an relative importance.
 # The function will loop over each importance level until importance_limit given by the user. In the end, plots the result in a line plot for importance lvl vs RMSLE score
+# Returns result dataframe as well
 
 def rdn_forest_look (df, importance_limit):
 
@@ -33,4 +34,6 @@ def rdn_forest_look (df, importance_limit):
     rdn_for_df["Importance value"] = imp_range
     rdn_for_df["RMSLE Score"] = RMSLE_list
 
-    return sns.lineplot(x="Importance value", y="RMSLE Score", data=rdn_for_df)
+    sns.lineplot(x="Importance value", y="RMSLE Score", data=rdn_for_df)
+
+    return rdn_for_df
