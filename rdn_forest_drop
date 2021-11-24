@@ -1,7 +1,7 @@
 # Uses random forest to find importance of features in large dataset df. According to the importance value (float type), drops columns below or equal to it and scores
 # the remaining features with the RMSLE. The function returns a plot of the relative importance of each feature, the amount of features dropped and the list
 
-def rdn_forest (df, importance_value):
+def rdn_forest_drop (df, importance_value):
 
     A = df.copy()
     u = A.pop("SalePrice")
