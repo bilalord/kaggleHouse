@@ -19,11 +19,12 @@ def rdn_forest_look (df, importance_limit):
 
     imp_range = np.arange(0,importance_limit,0.0001)
     rdn_for_df = pd.DataFrame(columns=["Importance value", "RMSLE Score"], index=range(len(imp_range)))
+    imp_ = pd.DataFrame({"Feature": features, "Importance": importances})
     RMSLE_list = []
     for i in imp_range:
         E = A.copy()
         #Drop columns below treshold
-        imp_df = pd.DataFrame({"Feature": features, "Importance": importances})
+        imp_df = imp_.copy()
         drop_rdn_for = imp_df["Feature"].iloc[imp_df.loc[imp_df["Importance"] <= i].index.tolist()]
         E = E.drop(columns=drop_rdn_for, axis=1)
         score = score_dataset(E,y)
@@ -32,4 +33,4 @@ def rdn_forest_look (df, importance_limit):
     rdn_for_df["Importance value"] = imp_range
     rdn_for_df["RMSLE Score"] = RMSLE_list
 
-    return sns.lineplot(rdn_for_df)
+    return sns.lineplot(x="Importance value", y="RMSLE Score", data=rdn_for_df)
