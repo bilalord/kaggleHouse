@@ -40,3 +40,6 @@ def corr_drop (df, min_corr):
     g = sns.PairGrid(corr_output_df, y_vars=["# Dropped"], x_vars=["Correlation %", "RMSLE Score"])
 
     return g.map(sns.scatterplot)
+
+
+#lol
