@@ -77,10 +77,18 @@ y = X.pop("SalePrice")
 rdn_forest_score = score_dataset(X,y)
 print("RMSLE Score after RDNForest splicing:", round(rdn_forest_score,5))
 
-# Function directional_selection executes directional feature elimination using RMSLE as scoring method with a linear
-# fit. Function outputs results DF and displays lineplot of results with seaborn
+# Function directional_selection executes directional feature elimination using neg_mean_squared_error as
+# scoring method (bc of the possible negative values, took the square instead of log)
+# with a linear fit. Function outputs results DF and displays lineplot of results with seaborn
 # Backward selection did not improve RMSLE from 60 down to 20 features (using forward_bool = False)
-# Forward selection did not improve RMSLE from 60 down to 20 features (using forward_bool = True)
+# Forward selection improved RMSLE with 32 features (using forward_bool = True) down to a score of 0.13880
+from feature_selection.directional_selection import directional_selection
+"""dir_selection_output = directional_selection(house_train, 40, True)"""
+# Therefore, run forward feature selection with features_nb = 32 and score the new dataset
+# All that can be done with same function as for exploration by setting assess_bool to False
+B = directional_selection(house_train, 32, True, False)
+
+
 
 
 
