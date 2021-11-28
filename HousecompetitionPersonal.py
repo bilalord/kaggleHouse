@@ -165,9 +165,9 @@ list_cat_null = ['MSZoning', 'Alley', 'Utilities', 'Exterior1st', 'Exterior2nd',
  'GarageFinish', 'GarageQual', 'GarageCond', 'PoolQC', 'Fence', 'MiscFeature', 'SaleType']
 list_cat_val = [4, 2721, 2, 1, 1, 24, 81, 82, 82, 79, 80, 1, 1, 2, 1420, 157, 159, 159, 159, 2909, 2348, 2814, 1]
 
-df_desc_cat = {"CatMissValCat" : list_cat_null, "NbMissValCat" : list_cat_val}
+df_desc_cat = {"CatMissValCat" : list_cat_null, "NbMissVal" : list_cat_val}
 df_desc_cat = pd.DataFrame(data=df_desc_cat)
-df_desc_cat["PercMissValCat"] = df_desc_cat.NbMissValCat.div(len(df.index))
+df_desc_cat["PercMissVal"] = df_desc_cat.NbMissValCat.div(len(df.index))
 
 # Features Alley, PoolQC, Fence and MiscFeature have >93% missing values, drop columns from df
 # After further considerations, it is advised to drop >30% missing values variable, drop FireplaceQu from df
