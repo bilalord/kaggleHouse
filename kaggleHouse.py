@@ -24,4 +24,8 @@ df = clean(df)
 from data_loading.encode import encode
 df = encode(df)
 
-# Impute data (fill empty cells)
+# Impute data (fill empty cells) and drop cols with too many missing values arg: cutoff
+from data_loading.impute_drop import impute_drop
+df, df_impute_drop = impute_drop(df, 0.3)
+
+
