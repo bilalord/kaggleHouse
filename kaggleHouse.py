@@ -14,7 +14,7 @@ house_test = pd.read_csv("test_house.csv")
 # Merge to treat together/consistency
 df = pd.concat([house_train, house_test])
 
-# 1. Data preparation
+# 1. Data preparation/visualization
 
 # Clean data (typos, titles simplification)
 from data_loading.clean import clean
@@ -27,5 +27,11 @@ df = encode(df)
 # Impute data (fill empty cells) and drop cols with too many missing values arg: cutoff
 from data_loading.impute_drop import impute_drop
 df, df_impute_drop = impute_drop(df, 0.3)
+
+# Can visualize categorical distribution with vis_cat
+"""from data_loading.vis_cat import vis_cat
+vis_cat(df, "SaleType")"""
+
+
 
 
