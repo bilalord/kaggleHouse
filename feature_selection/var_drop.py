@@ -1,5 +1,7 @@
 #Drops features with low coefficient of variation. Chose cutoff value with rel_value (in absolute numbers).
 #Produces a dataframe with the statistical description of the dataset
+import pandas as pd
+
 
 def var_drop (df, rel_value):
     copy_df = df.copy()
@@ -10,6 +12,6 @@ def var_drop (df, rel_value):
     var_df["<10%"] = var_df["Coefficient"] < rel_value
     drop_var_features = var_df.index[var_df["<10%"]==True].tolist()
     df_out = copy_df.drop(drop_var_features, axis=1)
-    print(len(drop_var_features), " Features dropped: ", drop_var_features)
+    print(len(drop_var_features), " Features were dropped for CV below", rel_value*100,"%: ", drop_var_features)
 
-    return df_out
+    return df_out, var_df

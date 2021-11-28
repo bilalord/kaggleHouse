@@ -1,6 +1,10 @@
 # Checks for low correlation (Pearson's) features with the target category (here SalePrice) according to cutoff "min_corr" chosen by the user. min_corr is entered relative to 1.
 # The function proceeds to score (RMSLE) the dataset with each subsequent feature drop and returns 2 plots showing the change in RMSLE with the % of correlation analyze and with
 # the amount of features dropped
+import pandas as pd
+from feature_selection.score_dataset import score_dataset
+import numpy as np
+import seaborn as sns
 
 def corr_drop (df, min_corr):
 
@@ -39,7 +43,4 @@ def corr_drop (df, min_corr):
 
     g = sns.PairGrid(corr_output_df, y_vars=["# Dropped"], x_vars=["Correlation %", "RMSLE Score"])
 
-    return g.map(sns.scatterplot)
-
-
-#lol
+    return corr_output_df, g.map(sns.scatterplot)

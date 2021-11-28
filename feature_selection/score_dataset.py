@@ -1,6 +1,10 @@
 # Not mine, from KAGGLE.COM!
 # https://www.kaggle.com/ryanholbrook/feature-engineering-for-house-prices
 # RYAN HOLBROOK & ALEXIS COOK
+from xgboost import XGBRegressor
+import numpy as np
+from sklearn.model_selection import KFold, cross_val_score
+
 
 def score_dataset(X, y, model=XGBRegressor()):
     # Label encoding for categoricals

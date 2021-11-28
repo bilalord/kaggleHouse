@@ -276,7 +276,6 @@ print(f"Baseline score: {baseline_score:.5f} RMSLE")
 """sns.heatmap(data=house_corr)"""
 # Removing the >0.85 correlation columns (GarageYrBlt and GarageCars) did not improve RMSLE
 # RMSLE: 0.14649
-
 # Check low correlation with SalePrice, removing features with correlation up to 40% does not improve RMSLE
 # Same remark with high correlation features
 def corr_drop (df, min_corr):

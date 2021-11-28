@@ -1,4 +1,5 @@
 import pandas as pd
+from sklearn.preprocessing import OrdinalEncoder
 
 def impute_drop(df, cutoff):
 
@@ -62,9 +63,18 @@ def impute_drop(df, cutoff):
 # Impute categorical features with mode
     df[list_cat_null]=df[list_cat_null].fillna(df.mode().iloc[0])
 
+# Finish by encoding categorical features with ordinalencoder
+
+    all_cat_features = []
+    for name in df.select_dtypes("category"):
+        all_cat_features.append(name)
+
+    enc = OrdinalEncoder()
+    df[all_cat_features] = enc.fit_transform(df[all_cat_features])
+
 # Output Report  ----------------
 
-    print(len(num_names)," numerical features dropped: ", num_names)
-    print(len(cat_names)," categorical features dropped: ", cat_names)
+    print(len(num_names)," numerical features were dropped due to % missing data above", cutoff*100,":", num_names)
+    print(len(cat_names)," categorical features were dropped due to % missing data above", cutoff*100,":", cat_names)
 
     return df, df_desc_complete

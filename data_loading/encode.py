@@ -45,10 +45,6 @@ def encode(df):
         "Fence": ["MnWw", "GdWo", "MnPrv", "GdPrv"],
     }
 
-    # Add a None level for missing values
-    ordered_levels = {key: ["None"] + value for key, value in
-                      ordered_levels.items()}
-
     # Nominal categories
     for name in features_nom:
         df[name] = df[name].astype("category")
