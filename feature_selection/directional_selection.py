@@ -15,14 +15,14 @@ def directional_selection(df,nb_features, forward_bool, assess_bool):
             len_df = df.columns.value_counts().sum()-1
             range_feat = np.arange(len_df, nb_features-1, -1).tolist()
 
-        lreg = LinearRegression()
+        estimator = LinearRegression()
         dir_sel_df = pd.DataFrame(columns=["Features left", "RMSLE Score"], index=range(len(range_feat)))
         dir_sel_df["Features left"] = range_feat
         scores = []
 
         for i in range_feat:
             A = df.copy()
-            sfs1 = sfs(lreg, k_features=i, forward=forward_bool, scoring='neg_mean_squared_error')
+            sfs1 = sfs(estimator, k_features=i, forward=forward_bool, scoring='neg_mean_squared_error')
             X = df.copy()
             y = X.pop("SalePrice")
             sfs1 = sfs1.fit(X, y)
@@ -40,8 +40,8 @@ def directional_selection(df,nb_features, forward_bool, assess_bool):
         return dir_sel_df
 
     if assess_bool == False:
-        lreg = LinearRegression()
-        sfs1 = sfs(lreg, k_features=nb_features, forward=forward_bool, scoring='neg_mean_squared_error')
+        estimator = LinearRegression()
+        sfs1 = sfs(estimator, k_features=nb_features, forward=forward_bool, scoring='neg_mean_squared_error')
         X = df.copy()
         y = X.pop("SalePrice")
         sfs1 = sfs1.fit(X, y)
@@ -53,6 +53,6 @@ def directional_selection(df,nb_features, forward_bool, assess_bool):
         y = X.pop("SalePrice")
         scoring = score_dataset(X, y)
 
-        print("RMSLE Score after directional selection:", scoring)
+        print("RMSLE Score after directional selection:", round(scoring, 5))
 
         return A

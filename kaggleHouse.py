@@ -81,12 +81,12 @@ print("RMSLE Score after RDNForest splicing:", round(rdn_forest_score,5))
 # scoring method (bc of the possible negative values, took the square instead of log)
 # with a linear fit. Function outputs results DF and displays lineplot of results with seaborn
 # Backward selection did not improve RMSLE from 60 down to 20 features (using forward_bool = False)
-# Forward selection improved RMSLE with 32 features (using forward_bool = True) down to a score of 0.13880
+# Forward selection up to 50 improved RMSLE with 32 features (using forward_bool = True) down to a score of 0.13880
 from feature_selection.directional_selection import directional_selection
-"""dir_selection_output = directional_selection(house_train, 40, True)"""
+"""dir_selection_output = directional_selection(house_train, 50, True, True)"""
 # Therefore, run forward feature selection with features_nb = 32 and score the new dataset
-# All that can be done with same function as for exploration by setting assess_bool to False
-B = directional_selection(house_train, 32, True, False)
+# All that can be done with same function as above by setting assess_bool to False
+house_train = directional_selection(house_train, 32, True, False)
 
 
 
