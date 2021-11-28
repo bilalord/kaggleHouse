@@ -77,8 +77,10 @@ y = X.pop("SalePrice")
 rdn_forest_score = score_dataset(X,y)
 print("RMSLE Score after RDNForest splicing:", round(rdn_forest_score,5))
 
-
-
+# Function directional_selection executes directional feature elimination using RMSLE as scoring method with a linear
+# fit. Function outputs results DF and displays lineplot of results with seaborn
+# Backward selection did not improve RMSLE from 60 down to 20 features (using forward_bool = False)
+# Forward selection did not improve RMSLE from 60 down to 20 features (using forward_bool = True)
 
 
 
