@@ -54,4 +54,5 @@ def encode(df):
     # Ordinal categories
     for name, levels in ordered_levels.items():
         df[name] = df[name].astype(CategoricalDtype(levels, ordered=True))
+
     return df
