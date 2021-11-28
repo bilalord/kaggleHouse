@@ -91,4 +91,3 @@ house_train = directional_selection(house_train, 32, True, False)
 
 
 
-
