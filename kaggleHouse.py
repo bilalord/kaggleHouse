@@ -1,11 +1,4 @@
-import matplotlib.pyplot as plt
-import numpy as np
 import pandas as pd
-import seaborn as sns
-from xgboost import XGBRegressor
-from sklearn.preprocessing import OrdinalEncoder
-from sklearn.ensemble import RandomForestRegressor
-from sklearn.model_selection import KFold, cross_val_score
 
 # Import data set
 house_train = pd.read_csv("train_house.csv")
@@ -46,6 +39,9 @@ y = X.pop("SalePrice")
 baseline = score_dataset(X,y)
 print("RMSLE Score before feature selection:", round(baseline,5))
 
+# Remove ID feature
+house_train = house_train.drop(columns="Id", axis=1)
+
 # Check the variation in each column and remove what is below X% (enter relative value)
 # Outputs DF, CV analysis report DF and prints nb features dropped and which
 # Scores dataset after variation splicing
@@ -53,8 +49,8 @@ from feature_selection.var_drop import var_drop
 house_train, cv_var_df = var_drop(house_train,0.01)
 X = house_train.copy()
 y = X.pop("SalePrice")
-baseline = score_dataset(X,y)
-print("RMSLE Score after variation splicing:", round(baseline,5))
+score_cv = score_dataset(X,y)
+print("RMSLE Score after CV splicing:", round(score_cv,5))
 
 # Check for Pearson correlation versus target "SalePrice"
 # Functions outputs correlation dataframe with #features dropped for each cutoff% up to threshold set
@@ -65,6 +61,22 @@ print("RMSLE Score after variation splicing:", round(baseline,5))
 # Check low correlation with SalePrice, removing features with correlation up to 40% does not improve RMSLE
 from feature_selection.corr_drop import corr_drop
 """correlation_df = corr_drop(house_train,0.3)"""
+
+# Random Forest to check for importance versus "SalePrice" with cutoff importance level
+# Data exploration made using rdn_forest_look to check for different importance scores the scoring effect
+# Selected importance value with lowest RMSLE score on a wide range
+# Outputs lineplot of RMSLE score versus importance value
+from feature_selection.rdn_forest_look import rdn_forest_look
+"""rdn_forest_look(house_train,0.01)"""
+# Outputs spliced DF with or without importance plot according to bool
+# Score dataset after random forest sorting
+from feature_selection.rdn_forest_drop import rdn_forest_drop
+house_train = rdn_forest_drop(house_train, 0.0003, False)
+X = house_train.copy()
+y = X.pop("SalePrice")
+rdn_forest_score = score_dataset(X,y)
+print("RMSLE Score after RDNForest splicing:", round(rdn_forest_score,5))
+
 
 
 

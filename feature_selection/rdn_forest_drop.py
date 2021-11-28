@@ -1,10 +1,14 @@
 # Uses random forest to find importance of features in large dataset df. According to the importance value (float type), drops columns below or equal to it and scores
 # the remaining features with the RMSLE. The function returns a plot of the relative importance of each feature (if set to True), the amount of features dropped and the list
+import pandas as pd
+import matplotlib.pyplot as plt
+from sklearn.ensemble import RandomForestRegressor
+import numpy as np
 
 def rdn_forest_drop (df, importance_value, bool_plot):
 
     A = df.copy()
-    u = A.pop("SalePrice")
+    y = A.pop("SalePrice")
 
     if "Id" in A.columns:
         A = A.drop("Id", axis=1)
@@ -27,7 +31,7 @@ def rdn_forest_drop (df, importance_value, bool_plot):
     #Drop columns below treshold
     imp_df = pd.DataFrame({"Feature": features, "Importance": importances})
     drop_rdn_for = imp_df["Feature"].iloc[imp_df.loc[imp_df["Importance"] < importance_value].index.tolist()]
-    A = A.drop(columns=drop_rdn_for, axis=1)
-    score = score_dataset(A,y)
+    df = df.drop(columns=drop_rdn_for, axis=1)
+    print(len(drop_rdn_for), " features dropped by RandomForest:", list(drop_rdn_for))
 
-    return print(len(drop_rdn_for)," features dropped. RMSLE Score is: ", score), drop_rdn_for
+    return df
